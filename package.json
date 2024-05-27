@@ -9,7 +9,10 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
-		"@cloudflare/itty-router-openapi": "^1.0.1"
+		"@cloudflare/itty-router-openapi": "^1.0.1",
+		"kysely": "^0.27.3",
+		"kysely-d1": "^0.3.0",
+		"ulid-workers": "^2.1.0"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240512.0",
