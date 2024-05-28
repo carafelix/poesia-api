@@ -1,5 +1,5 @@
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { poemas } from "./dbSchema";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { poem } from "./dbSchema";
 
-const insertPoemaSchema = createInsertSchema(poemas);
-export const selectPoemaSchema = createSelectSchema(poemas);
+const insertPoemSchema = createInsertSchema(poem);
+export const selectPoemaSchema = createSelectSchema(poem);
