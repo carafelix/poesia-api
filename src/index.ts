@@ -1,17 +1,23 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { PoemasList, LibrosList, AutoresList, LibroFetch, AutorFetch } from "endpoints/listas/listas";
+import { PoemaCreate, PoemaDelete, PoemaFetch  } from "endpoints/poemas/poemas";
 
 export const router = OpenAPIRouter({
 	docs_url: "/",
-});
+	redoc_url: "/redocs"
+})
 
-router.get("/api/tasks/", TaskList);
-router.post("/api/tasks/", TaskCreate);
-router.get("/api/tasks/:taskSlug/", TaskFetch);
-router.delete("/api/tasks/:taskSlug/", TaskDelete);
+router.get("/poemas/", PoemasList); // return a list of all poems, query params for limits, lexicographically ordered?
+router.get("/autores/", AutoresList); // return a list of authors,			 ", 					"
+router.get("/libros/", LibrosList); // return a list of books, 				 ",						"
+
+router.get("/poema/", PoemaFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
+router.post("/poema/", PoemaCreate); // needs to check book, author, pre-exist etc
+router.delete("/poema/:id", PoemaDelete);
+
+router.get("/:autor", AutorFetch); // return a list of books with all poems of each books
+router.get("/:autor/:libro", LibroFetch); // return all poems from a single book
+
 
 // 404 for everything else
 router.all("*", () =>
