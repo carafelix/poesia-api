@@ -31,5 +31,16 @@ router.all("*", () =>
 );
 
 export default {
-	fetch: router.handle,
+	async fetch(request: Request, env: Env) {
+		const { success } = await env.RATE_LIMITER.limit({ key: '/*' })
+		if (!success) {
+			return new Response(`429 Failure: Too many Request's. Try again later.`, { status: 429 })
+		}
+		return await router.handle(request,env)
+	}
 };
+
+interface Env {
+	POEMAS_DB: D1Database,
+	RATE_LIMITER: any
+}

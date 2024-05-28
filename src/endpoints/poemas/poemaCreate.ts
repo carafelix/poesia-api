@@ -6,12 +6,12 @@ import { Task } from "../../types";
 
 export class PoemaCreate extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
-		tags: ["Tasks"],
-		summary: "Create a new Task",
+		tags: ["Poem"],
+		summary: "Create a new Poem",
 		requestBody: Task,
 		responses: {
 			"200": {
-				description: "Returns the created task",
+				description: "Returns the created Poem",
 				schema: {
 					success: Boolean,
 					result: {

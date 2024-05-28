@@ -4,24 +4,24 @@ import {
 	Path,
 } from "@cloudflare/itty-router-openapi";
 import { Task } from "../../types";
+import { selectPoemaSchema } from "schemas/zodSchemas";
+
 
 export class PoemaFetch extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
 		tags: ["Tasks"],
 		summary: "Get a single Task by slug",
-		parameters: {
-			taskSlug: Path(String, {
-				description: "Task slug",
-			}),
-		},
+		// parameters: {
+		// 	taskSlug: Path(String, {
+		// 		description: "Task slug",
+		// 	}),
+		// },
 		responses: {
 			"200": {
 				description: "Returns a single task if found",
 				schema: {
 					success: Boolean,
-					result: {
-						task: Task,
-					},
+					result: selectPoemaSchema
 				},
 			},
 			"404": {
@@ -40,9 +40,8 @@ export class PoemaFetch extends OpenAPIRoute {
 		context: any,
 		data: Record<string, any>
 	) {
-		// Retrieve the validated slug
-		const { taskSlug } = data.params;
 
+		const { taskSlug } = data.params;
 		// Implement your own object fetch here
 
 		const exists = true;
