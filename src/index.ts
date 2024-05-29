@@ -1,28 +1,28 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
 import {
-  AutoresList,
-  AutorFetch,
-  LibroFetch,
-  LibrosList,
-  PoemasList,
-} from "endpoints/listas/listas";
-import { PoemaCreate, PoemaDelete, PoemaFetch } from "endpoints/poemas/poemas";
+  AuthorFetch,
+  AuthorsList,
+  BookFetch,
+  BooksList,
+  PoemsList
+} from "endpoints/lists/lists";
+import { PoemCreate, PoemDelete, PoemFetch } from "endpoints/poems/poems";
 
 export const router = OpenAPIRouter({
   docs_url: "/",
   redoc_url: "/redocs",
 });
 
-router.get("/poemas/", PoemasList); // return a list of all poems, query params for limits, lexicographically ordered?
-router.get("/autores/", AutoresList); // return a list of authors,			 ", 					"
-router.get("/libros/", LibrosList); // return a list of books, 				 ",						"
+router.get("/poemas/", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
+router.get("/autores/", AuthorsList); // return a list of authors,			 ", 					"
+router.get("/libros/", BooksList); // return a list of books, 				 ",						"
 
-router.get("/poema/", PoemaFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
-router.post("/poema/", PoemaCreate); // needs to check book, author, pre-exist etc
-router.delete("/poema/:id", PoemaDelete);
+router.get("/poema/", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
+router.post("/poema/", PoemCreate); // needs to check book, author, pre-exist etc
+router.delete("/poema/:id", PoemDelete);
 
-router.get("/:autor", AutorFetch); // return a list of books with all poems of each books
-router.get("/:autor/:libro", LibroFetch); // return all poems from a single book
+router.get("/:autor", AuthorFetch); // return a list of books with all poems of each books
+router.get("/:autor/:libro", BookFetch); // return all poems from a single book
 
 // 404 for everything else
 router.all("*", () =>
