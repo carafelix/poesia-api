@@ -4,7 +4,7 @@ import {
 } from "@cloudflare/itty-router-openapi";
 import { Task } from "../../types";
 
-export class PoemaCreate extends OpenAPIRoute {
+export class PoemCreate extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Poem"],
     summary: "Create a new Poem",

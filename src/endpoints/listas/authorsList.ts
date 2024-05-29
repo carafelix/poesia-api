@@ -5,7 +5,7 @@ import {
 } from "@cloudflare/itty-router-openapi";
 import { Task } from "../../types";
 
-export class LibrosList extends OpenAPIRoute {
+export class AuthorsList extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
     tags: ["Tasks"],
     summary: "List Tasks",
