@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { bearerAuth } from 'hono/bearer-auth'
 import { Bindings } from 'types';
-import { api } from 'api';
+import { api } from 'api-router';
 
 const privilegedMethods = ['POST', 'PUT', 'PATCH', 'DELETE']
 
@@ -14,7 +14,7 @@ export default {
       });
     }
     const app = new Hono()
-    app.use('/token', async (c, next) => {
+    app.use('/token/*', async (c, next) => {
       const bearer = bearerAuth({ token: env.SUDO_SECRET })
       return bearer(c, next)
     })

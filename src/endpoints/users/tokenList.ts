@@ -7,12 +7,12 @@ import {
 import { Bindings } from "types";
 import z from "zod";
 
-export class TokenDelete extends OpenAPIRoute {
+export class TokenList extends OpenAPIRoute {
     static schema: OpenAPIRouteSchema = {
         tags: ["Users"],
-        summary: "Delete a list of API tokens",
+        summary: "List current API tokens",
         requestBody: z.object({
-            tokens: z.array(z.string()).or(z.string())
+            tokensToDelete: z.array(z.string()).or(z.string())
         }),
         responses: {
             "200": {
@@ -31,23 +31,13 @@ export class TokenDelete extends OpenAPIRoute {
         request: Request,
         env: Bindings,
         context: any,
-        data: DataOf<typeof TokenDelete.schema> & {
-            body: {
-                tokens: string | string[]
-            }
-        },
-    ) { 
-        let tokens = data.body.tokens
-        if(!Array.isArray(tokens)){
-            tokens = [tokens]
-        }
-        for (let token of tokens) {
-            await env.TOKENS_KV.delete(token)
-        }
+        data: DataOf<typeof TokenList.schema>
+    ) {
+        const tokens = (await env.TOKENS_KV.list()).keys
         return {
             success: true,
             result: {
-                message: `Successfully deleted of the requested tokens`,
+                message: `List of all tokens`,
                 tokens
             },
         };
