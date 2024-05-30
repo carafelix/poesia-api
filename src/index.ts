@@ -14,13 +14,20 @@ export default {
       });
     }
     const app = new Hono()
-    app.on(privilegedMethods, '/*', async (c, next) => {
+    app.use('/token', async (c, next) => {
       const bearer = bearerAuth({ token: env.SUDO_SECRET })
       return bearer(c, next)
-    }).onError((_, c) => c.json(
-      simpleError("Insufficient permissions"), 403,
-    ))
-    
+    })
+    app.on(privilegedMethods, '/*', (c, next) => {
+      const bearer = bearerAuth({
+        verifyToken: async (token, c) => {
+          if (token === env.SUDO_SECRET) return true;
+          return await env.TOKENS_KV.get(token) ? true : false
+        },
+      })
+      return bearer(c, next)
+    })
+
     app.mount('/', api.handle)
 
     return await app.fetch(request, env, ctx)

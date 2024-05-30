@@ -7,17 +7,16 @@ import {
   PoemsList,
 } from "endpoints/lists/lists";
 import { PoemCreate, PoemDelete, PoemFetch } from "endpoints/poems/poems";
-import { TokenCreate } from "endpoints/users/tokenCreate";
+import { TokenCreate, TokenDelete } from "endpoints/users/users";
+
 
 export const api = OpenAPIRouter({
   docs_url: "/",
   redoc_url: "/redocs",
 });
 
-api.get('/eso', (req, env, ctx) => {
-  return new Response('papi')
-})
-api.post("/token/", TokenCreate); // return a list of all poems, query params for limits, lexicographically ordered?
+api.get("/token/", TokenCreate); // return a list of all poems, query params for limits, lexicographically ordered?
+api.delete("/token/", TokenDelete); // return a list of all poems, query params for limits, lexicographically ordered?
 
 api.get("/poemas/", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
 api.get("/autores/", AuthorsList); // return a list of authors,			 ", 					"
