@@ -66,7 +66,7 @@ export const book = pgTable("books", {
 
   title: text("title"),
   author: integer("author_id").references(() => author.id),
-  poems: json("poems").$type<Record<number, boolean>>(), // reference to the contained poems id's
+  poems: json("poems").$type<Record<number, any>>(), // reference to the contained poems id's
 
   createdAt: timestamp("created_at"),
   createdBy: timestamp("created_by"),
