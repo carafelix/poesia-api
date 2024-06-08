@@ -172,3 +172,5 @@ dist
 _/*
 .wrangler
 wrangler.toml
+.xatarc
+.xata

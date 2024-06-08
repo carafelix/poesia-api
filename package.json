@@ -11,6 +11,7 @@
   "dependencies": {
     "@cloudflare/itty-router-openapi": "^1.1.1",
     "@tsndr/cloudflare-worker-jwt": "^2.5.3",
+    "@xata.io/client": "^0.0.0-next.v0b9131efdfa1340c28d4ce9bd73d6c4854e7c140",
     "drizzle-orm": "^0.30.10",
     "drizzle-zod": "^0.5.1",
     "hono": "^4.4.0",
