@@ -9,7 +9,6 @@ import {
 import { PoemCreate, PoemDelete, PoemFetch } from "endpoints/poems/poems";
 import { TokenCreate, TokenDelete, TokenList } from "endpoints/users/users";
 
-
 export const api = OpenAPIRouter({
   docs_url: "/",
   redoc_url: "/redocs",
@@ -39,4 +38,3 @@ api.all("*", () =>
     },
     { status: 404 },
   ));
-

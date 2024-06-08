@@ -1,28 +1,32 @@
 import {
+  boolean,
+  char,
   index,
   integer,
-  sqliteTable,
+  json,
+  pgTable,
   text,
+  timestamp,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/pg-core";
 import { Poem } from "./zodSchemas";
 
-export const apiUser = sqliteTable("api_user", {
-  id: text("id").primaryKey(),
-  uploadedPoems: text("uploaded_poems", { mode: "json" }).$type<string[]>(), // reference to the contained poems id's
+export const apiUser = pgTable("api_user", {
+  id: char("id", { length: 26 }).primaryKey(),
+  uploadedPoems: json("uploaded_poems").$type<string[]>(), // reference to the contained poems id's
 });
 
-export const author = sqliteTable("authores", {
-  id: text("id").primaryKey(),
+export const author = pgTable("authores", {
+  id: char("id", { length: 26 }).primaryKey(),
 
   name: text("name"),
   country: text("country"),
-  birthDate: integer("birth_date", { mode: "timestamp" }),
-  deathDate: integer("death_date", { mode: "timestamp" }),
+  birthDate: integer("birth_date"),
+  deathDate: integer("death_date"),
 
-  createdAt: integer("created_at", { mode: "timestamp_ms" }),
-  createdBy: integer("created_by", { mode: "timestamp_ms" }),
-  lastModifiedAt: integer("last_modified_at", { mode: "timestamp_ms" }),
+  createdAt: timestamp("created_at"),
+  createdBy: timestamp("created_by"),
+  lastModifiedAt: timestamp("last_modified_at"),
   lastModifiedBy: integer("last_modified_by").references(() => apiUser.id),
 }, (table) => {
   return {
@@ -33,9 +37,9 @@ export const author = sqliteTable("authores", {
   };
 });
 
-export const poem = sqliteTable("poems", {
-  id: text("id").primaryKey(),
-  canon: integer("canon", { mode: "boolean" }),
+export const poem = pgTable("poems", {
+  id: char("id", { length: 26 }).primaryKey(),
+  canon: boolean("canon"),
 
   title: text("title").notNull(),
   author: integer("author_id").references(() => author.id).notNull(),
@@ -44,9 +48,9 @@ export const poem = sqliteTable("poems", {
   dedication: text("dedication"),
   quote: text("quote"),
 
-  createdAt: integer("created_at", { mode: "timestamp_ms" }),
-  createdBy: integer("created_by", { mode: "timestamp_ms" }),
-  lastModifiedAt: integer("last_modified_at", { mode: "timestamp_ms" }),
+  createdAt: timestamp("created_at"),
+  createdBy: timestamp("created_by"),
+  lastModifiedAt: timestamp("last_modified_at"),
   lastModifiedBy: integer("last_modified_by").references(() => apiUser.id),
 }, (table) => {
   return {
@@ -57,16 +61,16 @@ export const poem = sqliteTable("poems", {
   };
 });
 
-export const book = sqliteTable("books", {
-  id: text("id").primaryKey(),
+export const book = pgTable("books", {
+  id: char("id", { length: 26 }).primaryKey(),
 
   title: text("title"),
   author: integer("author_id").references(() => author.id),
-  poems: text("poems", { mode: "json" }).$type<Record<number, boolean>>(), // reference to the contained poems id's
+  poems: json("poems").$type<Record<number, boolean>>(), // reference to the contained poems id's
 
-  createdAt: integer("created_at", { mode: "timestamp_ms" }),
-  createdBy: integer("created_by", { mode: "timestamp_ms" }),
-  lastModifiedAt: integer("last_modified_at", { mode: "timestamp_ms" }),
+  createdAt: timestamp("created_at"),
+  createdBy: timestamp("created_by"),
+  lastModifiedAt: timestamp("last_modified_at"),
   lastModifiedBy: integer("last_modified_by").references(() => apiUser.id),
 }, (table) => {
   return {
@@ -76,9 +80,9 @@ export const book = sqliteTable("books", {
   };
 });
 
-export const poemBackup = sqliteTable("poem_past", {
-  id: text("id").primaryKey().references(() => poem.id),
+export const poemBackup = pgTable("poem_past", {
+  id: char("id", { length: 26 }).primaryKey().references(() => poem.id),
   // should be read-only after first write
-  _original: text("original", { mode: "json" }).$type<Poem>(),
-  past: text("past", { mode: "json" }).$type<Poem>(),
+  _original: json("original").$type<Poem>(),
+  past: json("past").$type<Poem>(),
 });

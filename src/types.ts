@@ -10,7 +10,7 @@ export const Task = {
 
 export type Bindings = {
   POEMAS_DB: D1Database;
-  TOKENS_KV: KVNamespace,
+  TOKENS_KV: KVNamespace;
   RATE_LIMITER: any;
   SUDO_SECRET: string;
-}
+};
