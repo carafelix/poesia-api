@@ -1,5 +1,6 @@
 import {
   bigint,
+  boolean,
   integer,
   pgTable,
   text,
@@ -51,7 +52,7 @@ export const books = pgTable("books", {
     mode: "string",
   }).defaultNow().notNull(),
   xata_id: text("xata_id").default(
-    `('rec_':: text || (xata_private.xid()):: text)`,
+    `('rec_'::text || (xata_private.xid())::text)`,
   ).notNull(),
   author_id: text("author_id").notNull(),
   author_name: text("author_name").notNull(),
@@ -71,7 +72,7 @@ export const poems = pgTable("poems", {
   // You can use { mode: "bigint" } if numbers are exceeding js number limitations
   subindex: bigint("subindex", { mode: "number" }),
   xata_id: text("xata_id").default(
-    `('rec_':: text || (xata_private.xid()):: text)`,
+    `('rec_'::text || (xata_private.xid())::text)`,
   ).notNull(),
   xata_version: integer("xata_version").default(0).notNull(),
   xata_createdat: timestamp("xata_createdat", {
@@ -82,6 +83,7 @@ export const poems = pgTable("poems", {
     withTimezone: true,
     mode: "string",
   }).defaultNow().notNull(),
+  canon: boolean("canon").default(false).notNull(),
 }, (table) => {
   return {
     _pgroll_new_poems_xata_id_key: uniqueIndex("_pgroll_new_poems_xata_id_key")

@@ -7,27 +7,18 @@ import { Task } from "../../types";
 
 export class AuthorFetch extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
-    tags: ["Tasks"],
-    summary: "List Tasks",
+    tags: ["Authors"],
+    summary: "List Authors",
     parameters: {
       page: Query(Number, {
         description: "Page number",
         default: 0,
       }),
-      isCompleted: Query(Boolean, {
-        description: "Filter by completed flag",
-        required: false,
-      }),
     },
     responses: {
       "200": {
         description: "Returns a list of tasks",
-        schema: {
-          success: Boolean,
-          result: {
-            tasks: [Task],
-          },
-        },
+        schema: {},
       },
     },
   };

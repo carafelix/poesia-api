@@ -4,7 +4,7 @@ import {
   OpenAPIRouteSchema,
 } from "@cloudflare/itty-router-openapi";
 import { AuthorSchema, createAuthorSchema } from "db/zodSchemas";
-import { authors } from "../../db/drizzle/schema";
+import * as schema from "db/drizzle/schema";
 import { drizzle } from "drizzle-orm/xata-http";
 import { XataClient } from "../../db/xata";
 import { Bindings } from "types";
@@ -36,13 +36,13 @@ export class AuthorCreate extends OpenAPIRoute {
       branch: "dev",
       apiKey: env.XATA_API_KEY,
     });
-    const db = drizzle(xata);
+    const db = drizzle(xata, { schema });
 
     const author = createAuthorSchema.parse(data.body);
 
     // this can be done with a onError??
     try {
-      const result = await db.insert(authors).values(
+      const result = await db.insert(schema.authors).values(
         author,
       );
       return {
