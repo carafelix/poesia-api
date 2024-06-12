@@ -14,8 +14,8 @@ import { z } from "zod";
 
 export class AuthorList extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
-    tags: ["Tasks"],
-    summary: "List Tasks",
+    tags: ["Authors"],
+    summary: "List Authors",
     parameters: {
       page: Query(
         z.coerce.number().min(0).default(0),
@@ -35,7 +35,7 @@ export class AuthorList extends OpenAPIRoute {
     },
     responses: {
       "200": {
-        description: "Returns a list of tasks",
+        description: "Returns a list of Authors",
         schema: {
           authors: [AuthorSchema],
         },
@@ -69,9 +69,9 @@ export class AuthorList extends OpenAPIRoute {
       return await db.query.authors.findMany({
         ...params,
         ...{
-          where(fields, operators) {
+          where(fields, oper) {
             return country in countries
-              ? operators.eq(fields.country, country)
+              ? oper.eq(fields.country, country)
               : undefined;
           },
         },

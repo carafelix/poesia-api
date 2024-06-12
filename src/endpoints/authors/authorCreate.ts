@@ -11,7 +11,7 @@ import { Bindings } from "types";
 import z from "zod";
 export class AuthorCreate extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
-    tags: ["Author"],
+    tags: ["Authors"],
     summary: "Create a new Author",
     requestBody: createAuthorSchema,
     responses: {

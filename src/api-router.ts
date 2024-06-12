@@ -13,6 +13,7 @@ import {
   AuthorUpdate,
 } from "endpoints/authors/author";
 import { TokenCreate, TokenDelete, TokenList } from "endpoints/users/users";
+import { BooksList } from "endpoints/books/book";
 
 export const api = OpenAPIRouter({
   docs_url: "/",
@@ -23,13 +24,13 @@ api.get("/token", TokenCreate); // return a list of all poems, query params for 
 api.delete("/token", TokenDelete); // return a list of all poems, query params for limits, lexicographically ordered?
 api.get("/token/all", TokenList); // return a list of all poems, query params for limits, lexicographically ordered?
 
-// api.get("/poemas", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
+api.get("/poemas", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
 api.get("/autores", AuthorList); // return a list of authors,			 ", 					"
-// // api.get("/libros", BooksList); // return a list of books, 				 ",						"
+api.get("/libros", BooksList); // return a list of books, 				 ",						"
 
 api.put("/autores", AuthorCreate);
 // api.patch("/autores/:name", AuthorUpdate);
-// api.get("/poema", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
+api.get("/poema", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
 // api.post("/poema", PoemCreate); // needs to check book, author, pre-exist etc
 // api.delete("/poema/:id", PoemDelete);
 

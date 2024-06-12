@@ -14,5 +14,4 @@ export type Bindings = {
   RATE_LIMITER: any;
   SUDO_SECRET: string;
   XATA_API_KEY: string;
-  XATA_CONNECT: string;
 };

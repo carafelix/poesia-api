@@ -1,32 +1,44 @@
 import {
+  DataOf,
   OpenAPIRoute,
   OpenAPIRouteSchema,
   Query,
 } from "@cloudflare/itty-router-openapi";
-import { Task } from "../../types";
+import * as schema from "db/drizzle/schema";
+import { XataClient } from "db/xata";
+import { BookSchema } from "db/zodSchemas";
+import { drizzle } from "drizzle-orm/xata-http";
+import { Bindings } from "types";
+import { z } from "zod";
 
 export class BooksList extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
-    tags: ["Tasks"],
-    summary: "List Tasks",
+    tags: ["Books"],
+    summary: "List Books",
     parameters: {
-      page: Query(Number, {
-        description: "Page number",
-        default: 0,
+      page: Query(
+        z.coerce.number().min(0).default(0),
+        {
+          description: "Page number",
+        },
+      ),
+      per_page: Query(z.coerce.number().min(0).max(40).default(20), {
+        description: "Amount of Books per page. Max 40",
       }),
-      isCompleted: Query(Boolean, {
-        description: "Filter by completed flag",
-        required: false,
-      }),
+      // implement filtering by author, country, publish year
+
+      // author: Query(
+      //   z.string().optional(),
+      //   {
+      //     description: "Country to filter",
+      //   },
+      // ),
     },
     responses: {
       "200": {
-        description: "Returns a list of tasks",
+        description: "Returns a list of Books",
         schema: {
-          success: Boolean,
-          result: {
-            tasks: [Task],
-          },
+          books: [BookSchema],
         },
       },
     },
@@ -34,33 +46,31 @@ export class BooksList extends OpenAPIRoute {
 
   async handle(
     request: Request,
-    env: any,
+    env: Bindings,
     context: any,
-    data: Record<string, any>,
+    data: DataOf<typeof BooksList.schema>,
   ) {
-    // Retrieve the validated parameters
-    const { page, isCompleted } = data.query;
+    const xata = new XataClient({
+      branch: "dev",
+      apiKey: env.XATA_API_KEY,
+    });
 
-    // Implement your own object list here
+    const db = drizzle(xata, {
+      schema,
+    });
 
-    return {
-      success: true,
-      tasks: [
-        {
-          name: "Clean my room",
-          slug: "clean-room",
-          description: null,
-          completed: false,
-          due_date: "2025-01-05",
-        },
-        {
-          name: "Build something awesome with Cloudflare Workers",
-          slug: "cloudflare-workers",
-          description: "Lorem Ipsum",
-          completed: true,
-          due_date: "2022-12-24",
-        },
-      ],
+    const { page, per_page } = data.query;
+
+    const params = {
+      limit: per_page,
+      offset: page * per_page,
     };
+
+    try {
+      return await db.query.books.findMany(params);
+    } catch (error) {
+      delete error.requestId;
+      return new Response(JSON.stringify(error), { status: error.status });
+    }
   }
 }
