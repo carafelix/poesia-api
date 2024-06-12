@@ -1,0 +1,27 @@
+export const countries = {
+  "mexico": true,
+  "colombia": true,
+  "españa": true,
+  "argentina": true,
+  "peru": true,
+  "venezuela": true,
+  "chile": true,
+  "guatemala": true,
+  "ecuador": true,
+  "bolivia": true,
+  "cuba": true,
+  "republica_dominicana": true,
+  "honduras": true,
+  "paraguay": true,
+  "el_salvador": true,
+  "nicaragua": true,
+  "costa_rica": true,
+  "panama": true,
+  "uruguay": true,
+  "puerto_rico": true,
+  "gibraltar": true,
+  "estados_unidos": true,
+  "filipinas": true,
+} as const;
+
+export type Country = keyof typeof countries;

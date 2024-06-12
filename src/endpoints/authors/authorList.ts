@@ -9,6 +9,7 @@ import { XataClient } from "db/xata";
 import { AuthorSchema } from "db/zodSchemas";
 import { drizzle } from "drizzle-orm/xata-http";
 import { Bindings } from "types";
+import { countries } from "lib/countries";
 import { z } from "zod";
 
 export class AuthorList extends OpenAPIRoute {
@@ -57,19 +58,27 @@ export class AuthorList extends OpenAPIRoute {
       schema,
     });
 
-    const { page, per_page } = data.query;
+    const { page, per_page, country } = data.query;
 
-    // try {
-    const result = await db.query.authors.findMany(
-      {
-        limit: per_page,
-        offset: page * per_page,
-      },
-    );
-    console.log(result);
-    // } catch (error) {
-    // }
+    const params = {
+      limit: per_page,
+      offset: page * per_page,
+    };
 
-    return {};
+    try {
+      return await db.query.authors.findMany({
+        ...params,
+        ...{
+          where(fields, operators) {
+            return country in countries
+              ? operators.eq(fields.country, country)
+              : undefined;
+          },
+        },
+      });
+    } catch (error) {
+      delete error.requestId;
+      return new Response(JSON.stringify(error), { status: error.status });
+    }
   }
 }
