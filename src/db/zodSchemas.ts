@@ -1,6 +1,6 @@
-// import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-// import { apiUserTable, AuthorTable, BookTable, PoemTable } from "./dbSchema";
-// import z from "zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { authors } from "./drizzle/schema";
+import z from "zod";
 
 // export const dummy = createSelectSchema(apiUserTable);
 
@@ -15,17 +15,12 @@
 
 // export type Poem = Zod.infer<typeof _poem>; // should be done in the zod of things
 
-// // Authors
+// Authors
 
-// export const createAuthorSchema = createInsertSchema(AuthorTable, {
-//   id: (author) => author.id.optional(),
-//   createdAt: (author) => author.createdAt.optional(),
-//   lastModifiedAt: (author) => author.lastModifiedAt.optional(),
-//   lastModifiedBy: (author) => author.lastModifiedBy.optional(),
-// });
-// export const AuthorSchema = createSelectSchema(AuthorTable);
-// export type Author = Zod.infer<typeof AuthorSchema>;
-// export type createAuthor = Zod.infer<typeof createAuthorSchema>;
+export const createAuthorSchema = createInsertSchema(authors);
+export const AuthorSchema = createSelectSchema(authors);
+export type Author = Zod.infer<typeof AuthorSchema>;
+export type createAuthor = Zod.infer<typeof createAuthorSchema>;
 
 // // Books
 // export const selectBookSchema = createSelectSchema(BookTable);

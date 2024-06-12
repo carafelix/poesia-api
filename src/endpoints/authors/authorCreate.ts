@@ -3,12 +3,7 @@ import {
   OpenAPIRoute,
   OpenAPIRouteSchema,
 } from "@cloudflare/itty-router-openapi";
-// import {
-//   AuthorSchema,
-//   createAuthor,
-//   createAuthorSchema,
-//   dummy,
-// } from "schemas/zodSchemas";
+import { createAuthorSchema } from "db/zodSchemas";
 import { authors } from "../../db/drizzle/schema";
 import { drizzle } from "drizzle-orm/xata-http";
 import { XataClient } from "../../db/xata";
@@ -43,11 +38,11 @@ export class AuthorCreate extends OpenAPIRoute {
       apiKey: env.XATA_API_KEY,
     });
     const db = drizzle(xata);
-    const author = body;
-    // const author = AuthorSchema.parse(author);
+    const _author = body;
+    const author = createAuthorSchema.parse(_author);
 
     const result = await db.insert(authors).values(
-      author as typeof authors.$inferInsert,
+      author,
     );
     // if (!result) {
     //   return new Response("Database insertion failed", { status: 503 });
