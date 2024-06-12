@@ -27,7 +27,7 @@ api.get("/token/all", TokenList); // return a list of all poems, query params fo
 // api.get("/autores", AuthorList); // return a list of authors,			 ", 					"
 // // api.get("/libros", BooksList); // return a list of books, 				 ",						"
 
-api.post("/autores", AuthorCreate);
+api.put("/autores", AuthorCreate);
 api.patch("/autores/:name", AuthorUpdate);
 // api.get("/poema", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
 // api.post("/poema", PoemCreate); // needs to check book, author, pre-exist etc
