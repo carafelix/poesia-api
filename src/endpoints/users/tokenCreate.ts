@@ -36,7 +36,15 @@ export class TokenCreate extends OpenAPIRoute {
     data: DataOf<typeof TokenCreate.schema>,
   ) {
     const token = crypto.randomUUID();
-    env.TOKENS_KV.put(token, JSON.stringify({ name: "dummy", email: "dummy@example", authLevel: 10 }));
+    env.TOKENS_KV.put(
+      token,
+      JSON.stringify({
+        name: "dummy",
+        email: "dummy@example",
+        authLevel: 10,
+        webID: "someID",
+      }),
+    );
 
     return {
       success: true,

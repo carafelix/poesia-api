@@ -1,12 +1,17 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
 import {
-  AuthorFetch,
-  AuthorsList,
-  BookFetch,
-  BooksList,
+  PoemCreate,
+  PoemDelete,
+  PoemFetch,
   PoemsList,
-} from "endpoints/lists/lists";
-import { PoemCreate, PoemDelete, PoemFetch } from "endpoints/poems/poems";
+} from "endpoints/poems/poem";
+import {
+  AuthorCreate,
+  AuthorDelete,
+  AuthorFetch,
+  AuthorList,
+  AuthorUpdate,
+} from "endpoints/authors/author";
 import { TokenCreate, TokenDelete, TokenList } from "endpoints/users/users";
 
 export const api = OpenAPIRouter({
@@ -18,10 +23,12 @@ api.get("/token", TokenCreate); // return a list of all poems, query params for 
 api.delete("/token", TokenDelete); // return a list of all poems, query params for limits, lexicographically ordered?
 api.get("/token/all", TokenList); // return a list of all poems, query params for limits, lexicographically ordered?
 
-api.get("/poemas", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
-api.get("/autores", AuthorsList); // return a list of authors,			 ", 					"
-api.get("/libros", BooksList); // return a list of books, 				 ",						"
+// api.get("/poemas", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
+// api.get("/autores", AuthorList); // return a list of authors,			 ", 					"
+// // api.get("/libros", BooksList); // return a list of books, 				 ",						"
 
+api.post("/autores", AuthorCreate);
+api.patch("/autores/:name", AuthorUpdate);
 // api.get("/poema", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
 // api.post("/poema", PoemCreate); // needs to check book, author, pre-exist etc
 // api.delete("/poema/:id", PoemDelete);

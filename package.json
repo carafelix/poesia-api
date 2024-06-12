@@ -12,16 +12,19 @@
     "@cloudflare/itty-router-openapi": "^1.1.1",
     "@tsndr/cloudflare-worker-jwt": "^2.5.3",
     "@xata.io/client": "^0.0.0-next.v0b9131efdfa1340c28d4ce9bd73d6c4854e7c140",
-    "drizzle-orm": "^0.30.10",
+    "drizzle-orm": "^0.31.2",
     "drizzle-zod": "^0.5.1",
-    "hono": "^4.4.0",
-    "ulid-workers": "^2.1.0"
+    "hono": "^4.4.5",
+    "pg": "^8.12.0",
+    "ulid-workers": "^2.1.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240512.0",
-    "@types/node": "^20.5.7",
-    "@types/service-worker-mock": "^2.0.1",
-    "drizzle-kit": "^0.21.4",
-    "wrangler": "^3.0.0"
+    "@cloudflare/workers-types": "^4.20240605.0",
+    "@types/node": "^20.14.2",
+    "@types/pg": "^8.11.6",
+    "@types/service-worker-mock": "^2.0.4",
+    "drizzle-kit": "^0.22.7",
+    "wrangler": "^3.60.2"
   }
 }

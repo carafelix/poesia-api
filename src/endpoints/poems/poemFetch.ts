@@ -4,7 +4,6 @@ import {
   Path,
 } from "@cloudflare/itty-router-openapi";
 import { Task } from "../../types";
-import { selectPoemSchema } from "schemas/zodSchemas";
 
 export class PoemFetch extends OpenAPIRoute {
   static schema: OpenAPIRouteSchema = {
@@ -20,7 +19,7 @@ export class PoemFetch extends OpenAPIRoute {
         description: "Returns a single task if found",
         schema: {
           success: Boolean,
-          result: selectPoemSchema,
+          // result: selectPoemSchema,
         },
       },
       "404": {

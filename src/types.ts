@@ -13,4 +13,5 @@ export type Bindings = {
   TOKENS_KV: KVNamespace;
   RATE_LIMITER: any;
   SUDO_SECRET: string;
+  XATA_API_KEY: string;
 };

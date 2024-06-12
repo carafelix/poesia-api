@@ -1,0 +1,308 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.authors": {
+      "name": "authors",
+      "schema": "",
+      "columns": {
+        "birth_year": {
+          "name": "birth_year",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "death_year": {
+          "name": "death_year",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "xata_id": {
+          "name": "xata_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "('rec_'::text || (xata_private.xid())::text)"
+        },
+        "xata_version": {
+          "name": "xata_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "xata_createdat": {
+          "name": "xata_createdat",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "xata_updatedat": {
+          "name": "xata_updatedat",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "country": {
+          "name": "country",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "_pgroll_new_authors_xata_id_key": {
+          "name": "_pgroll_new_authors_xata_id_key",
+          "columns": [
+            {
+              "expression": "xata_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "authors_name_unique": {
+          "name": "authors_name_unique",
+          "columns": [
+            {
+              "expression": "name",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "_pgroll_new_authors_xata_id_key": {
+          "columns": [
+            "xata_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "_pgroll_new_authors_xata_id_key"
+        },
+        "authors_name_unique": {
+          "columns": [
+            "name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "authors_name_unique"
+        }
+      }
+    },
+    "public.books": {
+      "name": "books",
+      "schema": "",
+      "columns": {
+        "publish_year": {
+          "name": "publish_year",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "xata_version": {
+          "name": "xata_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "xata_createdat": {
+          "name": "xata_createdat",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "xata_updatedat": {
+          "name": "xata_updatedat",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "xata_id": {
+          "name": "xata_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "('rec_'::text || (xata_private.xid())::text)"
+        },
+        "author_id": {
+          "name": "author_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "author_name": {
+          "name": "author_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "_pgroll_new_books_xata_id_key": {
+          "name": "_pgroll_new_books_xata_id_key",
+          "columns": [
+            {
+              "expression": "xata_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "_pgroll_new_books_xata_id_key": {
+          "columns": [
+            "xata_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "_pgroll_new_books_xata_id_key"
+        }
+      }
+    },
+    "public.poems": {
+      "name": "poems",
+      "schema": "",
+      "columns": {
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "book_title": {
+          "name": "book_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "book_id": {
+          "name": "book_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "subindex": {
+          "name": "subindex",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "xata_id": {
+          "name": "xata_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "('rec_'::text || (xata_private.xid())::text)"
+        },
+        "xata_version": {
+          "name": "xata_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "xata_createdat": {
+          "name": "xata_createdat",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "xata_updatedat": {
+          "name": "xata_updatedat",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "_pgroll_new_poems_xata_id_key": {
+          "name": "_pgroll_new_poems_xata_id_key",
+          "columns": [
+            {
+              "expression": "xata_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "_pgroll_new_poems_xata_id_key": {
+          "columns": [
+            "xata_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "_pgroll_new_poems_xata_id_key"
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}
