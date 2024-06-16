@@ -147,6 +147,13 @@ const tables = [
             defaultValue: 'false',
          },
          {
+            name: 'no_sibilings',
+            type: 'bool',
+            notNull: false,
+            unique: false,
+            defaultValue: 'false',
+         },
+         {
             name: 'subindex',
             type: 'int',
             notNull: false,

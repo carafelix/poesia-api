@@ -55,7 +55,7 @@ export class PoemFetch extends OpenAPIRoute {
          schema,
       })
       let { id, title, subindex } = data.query
-      subindex ??= -1
+      subindex ??= 1
       try {
          const result = await db.query.poems.findFirst({
             orderBy: (poems) => poems.subindex,
@@ -69,7 +69,6 @@ export class PoemFetch extends OpenAPIRoute {
                )
             ),
          })
-         // result ??= same but without subindex
          if (!result) {
             return new Response('No poem Found', { status: 404 })
          }
