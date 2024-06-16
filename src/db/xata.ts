@@ -72,13 +72,6 @@ const tables = [
       name: 'books',
       columns: [
          {
-            name: 'author_id',
-            type: 'text',
-            notNull: true,
-            unique: false,
-            defaultValue: null,
-         },
-         {
             name: 'author_name',
             type: 'text',
             notNull: true,
@@ -226,9 +219,11 @@ export type DatabaseSchema = {
 
 const DatabaseClient = buildClient()
 
+const defaultOptions = {}
+
 export class XataClient extends DatabaseClient<DatabaseSchema> {
    constructor(options?: BaseClientOptions) {
-      super({ ...options }, tables)
+      super({ ...defaultOptions, ...options }, tables)
    }
 }
 
