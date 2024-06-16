@@ -56,7 +56,6 @@ export const books = pgTable('books', {
    xata_id: text('xata_id').default(
       `('rec_'::text || (xata_private.xid())::text)`,
    ).notNull(),
-   author_id: text('author_id').notNull(),
    author_name: text('author_name').notNull(),
    title: text('title').notNull(),
 }, (table) => {

@@ -18,7 +18,7 @@ export class PoemFetch extends OpenAPIRoute {
          title: Query(z.string().optional()),
          id: Query(z.string().optional()),
          subindex: Query(
-            z.coerce.number().min(1).default(1),
+            z.coerce.number().min(1).optional(),
             {
                description: "If a Poem is part of a set, it's index inside it",
             },
@@ -47,31 +47,35 @@ export class PoemFetch extends OpenAPIRoute {
    ) {
       const xata = new XataClient({
          branch: 'dev',
+         databaseURL: env.XATA_DB,
          apiKey: env.XATA_API_KEY,
       })
 
       const db = drizzle(xata, {
          schema,
       })
-
-      const { id, title, subindex } = data.query
+      let { id, title, subindex } = data.query
+      subindex ??= -1
       try {
          const result = await db.query.poems.findFirst({
-            where(fields, oper) {
-               return oper.or(
-                  oper.eq(fields.book_id, id),
-                  oper.and(
-                     oper.eq(fields.title, title.toUpperCase()),
-                     oper.eq(fields.subindex, subindex),
+            orderBy: (poems) => poems.subindex,
+            where: (poems, { eq, or, and }) => (
+               or(
+                  eq(poems.xata_id, id),
+                  and(
+                     eq(poems.title, title?.toUpperCase()),
+                     eq(poems.subindex, subindex),
                   ),
-                  oper.eq(fields.title, title.toUpperCase()),
                )
-            },
+            ),
          })
+         // result ??= same but without subindex
+         if (!result) {
+            return new Response('No poem Found', { status: 404 })
+         }
          return result
       } catch (error) {
-         delete error.requestId
-         return new Response(JSON.stringify(error), { status: error.status })
+         return new Response(JSON.stringify(data), { status: error.status })
       }
    }
 }

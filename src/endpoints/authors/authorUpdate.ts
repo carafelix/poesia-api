@@ -41,6 +41,7 @@ export class AuthorUpdate extends OpenAPIRoute {
    ) {
       const xata = new XataClient({
          branch: 'dev',
+         databaseURL: env.XATA_DB,
          apiKey: env.XATA_API_KEY,
       })
       const db = drizzle(xata, { schema })

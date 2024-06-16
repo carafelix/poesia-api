@@ -172,5 +172,4 @@ dist
 _/*
 .wrangler
 .xatarc
-.xata
-xata.ts
+.xata/*
