@@ -171,7 +171,6 @@ dist
 .dev.vars
 _/*
 .wrangler
-wrangler.toml
 .xatarc
 .xata
 xata.ts
