@@ -1,29 +1,29 @@
 {
-  "name": "cloudflare-workers-openapi",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev --port 8787",
-    "cf-typegen": "wrangler types"
-  },
-  "dependencies": {
-    "@cloudflare/itty-router-openapi": "^1.1.1",
-    "@tsndr/cloudflare-worker-jwt": "^2.5.3",
-    "@xata.io/client": "^0.0.0-next.v0b9131efdfa1340c28d4ce9bd73d6c4854e7c140",
-    "drizzle-orm": "^0.31.2",
-    "drizzle-zod": "^0.5.1",
-    "hono": "^4.4.5",
-    "pg": "^8.12.0",
-    "ulid-workers": "^2.1.0",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240605.0",
-    "@types/node": "^20.14.2",
-    "@types/pg": "^8.11.6",
-    "@types/service-worker-mock": "^2.0.4",
-    "drizzle-kit": "^0.22.7",
-    "wrangler": "^3.60.2"
-  }
+   "name": "cloudflare-workers-openapi",
+   "version": "0.0.1",
+   "private": true,
+   "scripts": {
+      "deploy": "wrangler deploy",
+      "dev": "wrangler dev --port 8787",
+      "cf-typegen": "wrangler types"
+   },
+   "dependencies": {
+      "@cloudflare/itty-router-openapi": "^1.1.1",
+      "@tsndr/cloudflare-worker-jwt": "^2.5.3",
+      "@xata.io/client": "^0.0.0-next.v0b9131efdfa1340c28d4ce9bd73d6c4854e7c140",
+      "drizzle-orm": "^0.31.2",
+      "drizzle-zod": "^0.5.1",
+      "hono": "^4.4.5",
+      "pg": "^8.12.0",
+      "ulid-workers": "^2.1.0",
+      "zod": "^3.23.8"
+   },
+   "devDependencies": {
+      "@cloudflare/workers-types": "^4.20240605.0",
+      "@types/node": "^20.14.2",
+      "@types/pg": "^8.11.6",
+      "@types/service-worker-mock": "^2.0.4",
+      "drizzle-kit": "^0.22.7",
+      "wrangler": "^3.60.2"
+   }
 }

@@ -1,36 +1,36 @@
-import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
+import { OpenAPIRouter } from '@cloudflare/itty-router-openapi'
 import {
-  PoemCreate,
-  PoemDelete,
-  PoemFetch,
-  PoemsList,
-} from "endpoints/poems/poem";
+   PoemCreate,
+   PoemDelete,
+   PoemFetch,
+   PoemsList,
+} from 'endpoints/poems/poem'
 import {
-  AuthorCreate,
-  AuthorDelete,
-  AuthorFetch,
-  AuthorList,
-  AuthorUpdate,
-} from "endpoints/authors/author";
-import { TokenCreate, TokenDelete, TokenList } from "endpoints/users/users";
-import { BooksList } from "endpoints/books/book";
+   AuthorCreate,
+   AuthorDelete,
+   AuthorFetch,
+   AuthorList,
+   AuthorUpdate,
+} from 'endpoints/authors/author'
+import { TokenCreate, TokenDelete, TokenList } from 'endpoints/users/users'
+import { BooksList } from 'endpoints/books/book'
 
 export const api = OpenAPIRouter({
-  docs_url: "/",
-  redoc_url: "/redocs",
-});
+   docs_url: '/',
+   redoc_url: '/redocs',
+})
 
-api.get("/token", TokenCreate); // return a list of all poems, query params for limits, lexicographically ordered?
-api.delete("/token", TokenDelete); // return a list of all poems, query params for limits, lexicographically ordered?
-api.get("/token/all", TokenList); // return a list of all poems, query params for limits, lexicographically ordered?
+api.get('/token', TokenCreate) // return a list of all poems, query params for limits, lexicographically ordered?
+api.delete('/token', TokenDelete) // return a list of all poems, query params for limits, lexicographically ordered?
+api.get('/token/all', TokenList) // return a list of all poems, query params for limits, lexicographically ordered?
 
-api.get("/poemas", PoemsList); // return a list of all poems, query params for limits, lexicographically ordered?
-api.get("/autores", AuthorList); // return a list of authors,			 ", 					"
-api.get("/libros", BooksList); // return a list of books, 				 ",						"
+api.get('/poemas', PoemsList) // return a list of all poems, query params for limits, lexicographically ordered?
+api.get('/autores', AuthorList) // return a list of authors,			 ", 					"
+api.get('/libros', BooksList) // return a list of books, 				 ",						"
 
-api.put("/autores", AuthorCreate);
+api.put('/autores', AuthorCreate)
 // api.patch("/autores/:name", AuthorUpdate);
-api.get("/poema", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
+api.get('/poema', PoemFetch) // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
 // api.post("/poema", PoemCreate); // needs to check book, author, pre-exist etc
 // api.delete("/poema/:id", PoemDelete);
 
@@ -38,11 +38,11 @@ api.get("/poema", PoemFetch); // id > autor/libro/nombre > autor/nombre > libro/
 // api.get("/:autor/:libro", BookFetch); // return all poems from a single book
 
 // 404 for everything else
-api.all("*", () =>
-  Response.json(
-    {
-      success: false,
-      error: "Route not found",
-    },
-    { status: 404 },
-  ));
+api.all('*', () =>
+   Response.json(
+      {
+         success: false,
+         error: 'Route not found',
+      },
+      { status: 404 },
+   ))
