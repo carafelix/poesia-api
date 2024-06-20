@@ -6,3 +6,7 @@ export type Bindings = {
    XATA_API_KEY: string
    XATA_DB: string
 }
+
+declare module 'cloudflare:test' {
+   interface ProvidedEnv extends Bindings {}
+}

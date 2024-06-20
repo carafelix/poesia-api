@@ -31,5 +31,5 @@
       ]
    },
    "exclude": ["node_modules", "dist", "tests"],
-   "include": ["src", "scripts", "src/db/drizzle"]
+   "include": ["src", "scripts", "src/db/drizzle", "test"]
 }

@@ -2,7 +2,6 @@ import {
    createExecutionContext,
    env,
    waitOnExecutionContext,
-   //@ts-expect-error
 } from 'cloudflare:test'
 import { describe, expect, it } from 'vitest'
 import worker from '../src/index'
