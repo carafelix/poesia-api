@@ -3,7 +3,8 @@
    "version": "0.0.1",
    "private": true,
    "scripts": {
-      "test": "vitest run",
+      "coverage": "rm -rf ./coverage && vitest run --coverage",
+      "test": "vitest",
       "deploy": "wrangler deploy",
       "dev": "wrangler dev --port 8787",
       "cf-typegen": "wrangler types"
@@ -25,6 +26,7 @@
       "@types/node": "^20.14.2",
       "@types/pg": "^8.11.6",
       "@types/service-worker-mock": "^2.0.4",
+      "@vitest/coverage-istanbul": "^1.5.0",
       "drizzle-kit": "^0.22.7",
       "vitest": "1.5.0",
       "wrangler": "^3.60.2"
