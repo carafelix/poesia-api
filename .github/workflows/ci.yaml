@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: tests
+    env:
+          XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+          XATA_DB: ${{secrets.XATA_DB}}
+          SUDO_SECRET: ${{ secrets.SUDO_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+            touch .dev.vars
+            echo SUDO_SECRET="$SUDO_SECRET" >> .dev.vars
+            echo XATA_API_KEY="$XATA_API_KEY" >> .dev.vars
+            echo XATA_DB="$XATA_DB" >> .dev.vars
+      - run: npm install
+      - run: npm run test
+            
