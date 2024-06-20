@@ -19,6 +19,8 @@ jobs:
           secrets: |
             XATA_API_KEY
             SUDO_SECRET
+            XATA_DB
         env:
           XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+          XATA_DB: ${{secrets.XATA_DB}}
           SUDO_SECRET: ${{ secrets.SUDO_SECRET }}
