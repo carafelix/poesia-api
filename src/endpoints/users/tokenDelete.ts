@@ -1,26 +1,23 @@
-import {
-   DataOf,
-   OpenAPIRoute,
-   OpenAPIRouteSchema,
-   Str,
-} from '@cloudflare/itty-router-openapi'
+import { contentJson, OpenAPIRoute } from 'chanfana'
 import { Bindings } from 'types'
 import z from 'zod'
 
 export class TokenDelete extends OpenAPIRoute {
-   static schema: OpenAPIRouteSchema = {
+   schema = {
       tags: ['Users'],
       summary: 'Delete a list of API tokens',
-      requestBody: z.object({
-         tokens: z.array(z.string()).or(z.string()),
-      }),
+      request: {
+         body: contentJson(z.object({
+            tokens: z.array(z.string()).or(z.string()),
+         })),
+      },
       responses: {
          '200': {
             description: 'Returns the created token',
             schema: {
                success: Boolean,
                result: {
-                  token: new Str(),
+                  token: z.string(),
                },
             },
          },
@@ -31,12 +28,9 @@ export class TokenDelete extends OpenAPIRoute {
       request: Request,
       env: Bindings,
       context: any,
-      data: DataOf<typeof TokenDelete.schema> & {
-         body: {
-            tokens: string | string[]
-         }
-      },
    ) {
+      const data = await this.getValidatedData<typeof this.schema>()
+
       let tokens = data.body.tokens
       if (!Array.isArray(tokens)) {
          tokens = [tokens]

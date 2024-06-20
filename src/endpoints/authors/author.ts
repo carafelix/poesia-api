@@ -1,5 +1,5 @@
 export { AuthorCreate } from './authorCreate'
-export { AuthorFetch } from './authorFetch'
-export { AuthorDelete } from './authorDelete'
+// export { AuthorDelete } from './authorDelete'
+// export { AuthorFetch } from './authorFetch'
 export { AuthorList } from './authorList'
 export { AuthorUpdate } from './authorUpdate'

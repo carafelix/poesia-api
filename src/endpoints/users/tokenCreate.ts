@@ -1,14 +1,9 @@
-import {
-   DataOf,
-   OpenAPIRoute,
-   OpenAPIRouteSchema,
-   Str,
-} from '@cloudflare/itty-router-openapi'
+import { OpenAPIRoute } from 'chanfana'
 import { Bindings } from 'types'
 import z from 'zod'
 
 export class TokenCreate extends OpenAPIRoute {
-   static schema: OpenAPIRouteSchema = {
+   schema = {
       tags: ['Users'],
       summary: 'Create a new API token',
       request: {
@@ -22,7 +17,7 @@ export class TokenCreate extends OpenAPIRoute {
             schema: {
                success: Boolean,
                result: {
-                  token: new Str(),
+                  token: z.string(),
                },
             },
          },
@@ -33,7 +28,6 @@ export class TokenCreate extends OpenAPIRoute {
       request: Request,
       env: Bindings,
       context: any,
-      data: DataOf<typeof TokenCreate.schema>,
    ) {
       const token = crypto.randomUUID()
       env.TOKENS_KV.put(

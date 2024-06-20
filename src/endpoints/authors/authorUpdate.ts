@@ -1,26 +1,21 @@
-import {
-   DataOf,
-   OpenAPIRoute,
-   OpenAPIRouteSchema,
-   Path,
-   Str,
-} from '@cloudflare/itty-router-openapi'
-import z from 'zod'
-import * as schema from 'db/drizzle/schema'
-
-import { AuthorSchema, createAuthorSchema } from 'db/zodSchemas'
-import { drizzle } from 'drizzle-orm/xata-http'
+import * as schema from '../../db/drizzle/schema'
 import { XataClient } from '../../db/xata'
+import { AuthorSchema, createAuthorSchema } from '../../db/zodSchemas'
+import { contentJson, Obj, OpenAPIRoute, Str } from 'chanfana'
+import { drizzle } from 'drizzle-orm/xata-http'
 import { Bindings } from 'types'
+import type { Context } from 'hono'
 
 export class AuthorUpdate extends OpenAPIRoute {
-   static schema: OpenAPIRouteSchema = {
+   schema = {
       tags: ['Author'],
       summary: 'Update an Author',
-      parameters: {
-         name: Path(Str),
+      request: {
+         params: Obj({
+            name: Str(),
+         }),
+         body: contentJson(createAuthorSchema),
       },
-      requestBody: createAuthorSchema,
       responses: {
          '200': {
             description: 'Returns the created Author',
@@ -32,17 +27,14 @@ export class AuthorUpdate extends OpenAPIRoute {
    }
 
    async handle(
-      request: Request,
+      ctx: Context,
       env: Bindings,
-      context: any,
-      data: DataOf<typeof AuthorUpdate.schema> & {
-         body: z.TypeOf<typeof createAuthorSchema>
-      },
    ) {
+      const data = await this.getValidatedData<typeof this.schema>()
       const xata = new XataClient({
          branch: 'dev',
-         databaseURL: env.XATA_DB,
-         apiKey: env.XATA_API_KEY,
+         databaseURL: ctx.env.XATA_DB,
+         apiKey: ctx.env.XATA_API_KEY,
       })
       const db = drizzle(xata, { schema })
 

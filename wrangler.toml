@@ -2,7 +2,7 @@
 name = "poesia-api"
 main = "src/index.ts"
 compatibility_date = "2024-05-12"
-node_compat = true
+compatibility_flags = [ "nodejs_compat" ]
 
 kv_namespaces = [
   { binding = "TOKENS_KV", id = "3b19b25ca7b54026915360492a674aa4" }
