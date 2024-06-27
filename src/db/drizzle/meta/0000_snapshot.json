@@ -61,40 +61,7 @@
                "notNull": true
             }
          },
-         "indexes": {
-            "_pgroll_new_authors_xata_id_key": {
-               "name": "_pgroll_new_authors_xata_id_key",
-               "columns": [
-                  {
-                     "expression": "xata_id",
-                     "asc": true,
-                     "nulls": "last",
-                     "opclass": "text_ops",
-                     "isExpression": false
-                  }
-               ],
-               "isUnique": true,
-               "concurrently": false,
-               "method": "btree",
-               "with": {}
-            },
-            "authors_name_unique": {
-               "name": "authors_name_unique",
-               "columns": [
-                  {
-                     "expression": "name",
-                     "asc": true,
-                     "nulls": "last",
-                     "opclass": "text_ops",
-                     "isExpression": false
-                  }
-               ],
-               "isUnique": true,
-               "concurrently": false,
-               "method": "btree",
-               "with": {}
-            }
-         },
+         "indexes": {},
          "foreignKeys": {},
          "compositePrimaryKeys": {},
          "uniqueConstraints": {
@@ -152,44 +119,43 @@
                "notNull": true,
                "default": "('rec_'::text || (xata_private.xid())::text)"
             },
-            "author_id": {
-               "name": "author_id",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true
-            },
-            "author_name": {
-               "name": "author_name",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true
-            },
             "title": {
                "name": "title",
                "type": "text",
                "primaryKey": false,
                "notNull": true
+            },
+            "author": {
+               "name": "author",
+               "type": "text",
+               "primaryKey": false,
+               "notNull": false,
+               "default": "'rec_cpkdr0jru25eev0v25k0'"
+            },
+            "GB_link": {
+               "name": "GB_link",
+               "type": "text",
+               "primaryKey": false,
+               "notNull": false
             }
          },
-         "indexes": {
-            "_pgroll_new_books_xata_id_key": {
-               "name": "_pgroll_new_books_xata_id_key",
-               "columns": [
-                  {
-                     "expression": "xata_id",
-                     "asc": true,
-                     "nulls": "last",
-                     "opclass": "text_ops",
-                     "isExpression": false
-                  }
+         "indexes": {},
+         "foreignKeys": {
+            "author_link": {
+               "name": "author_link",
+               "tableFrom": "books",
+               "tableTo": "authors",
+               "schemaTo": "public",
+               "columnsFrom": [
+                  "author"
                ],
-               "isUnique": true,
-               "concurrently": false,
-               "method": "btree",
-               "with": {}
+               "columnsTo": [
+                  "xata_id"
+               ],
+               "onDelete": "set null",
+               "onUpdate": "no action"
             }
          },
-         "foreignKeys": {},
          "compositePrimaryKeys": {},
          "uniqueConstraints": {
             "_pgroll_new_books_xata_id_key": {
@@ -198,6 +164,13 @@
                ],
                "nullsNotDistinct": false,
                "name": "_pgroll_new_books_xata_id_key"
+            },
+            "books_GB_link_unique": {
+               "columns": [
+                  "GB_link"
+               ],
+               "nullsNotDistinct": false,
+               "name": "books_GB_link_unique"
             }
          }
       },
@@ -213,18 +186,6 @@
             },
             "text": {
                "name": "text",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false
-            },
-            "book_title": {
-               "name": "book_title",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false
-            },
-            "book_id": {
-               "name": "book_id",
                "type": "text",
                "primaryKey": false,
                "notNull": false
@@ -262,27 +223,51 @@
                "primaryKey": false,
                "notNull": true,
                "default": "now()"
+            },
+            "canon": {
+               "name": "canon",
+               "type": "boolean",
+               "primaryKey": false,
+               "notNull": true,
+               "default": false
+            },
+            "no_sibilings": {
+               "name": "no_sibilings",
+               "type": "boolean",
+               "primaryKey": false,
+               "notNull": false,
+               "default": false
+            },
+            "length": {
+               "name": "length",
+               "type": "bigint",
+               "primaryKey": false,
+               "notNull": true
+            },
+            "book": {
+               "name": "book",
+               "type": "text",
+               "primaryKey": false,
+               "notNull": false
             }
          },
-         "indexes": {
-            "_pgroll_new_poems_xata_id_key": {
-               "name": "_pgroll_new_poems_xata_id_key",
-               "columns": [
-                  {
-                     "expression": "xata_id",
-                     "asc": true,
-                     "nulls": "last",
-                     "opclass": "text_ops",
-                     "isExpression": false
-                  }
+         "indexes": {},
+         "foreignKeys": {
+            "book_link": {
+               "name": "book_link",
+               "tableFrom": "poems",
+               "tableTo": "books",
+               "schemaTo": "public",
+               "columnsFrom": [
+                  "book"
                ],
-               "isUnique": true,
-               "concurrently": false,
-               "method": "btree",
-               "with": {}
+               "columnsTo": [
+                  "xata_id"
+               ],
+               "onDelete": "set null",
+               "onUpdate": "no action"
             }
          },
-         "foreignKeys": {},
          "compositePrimaryKeys": {},
          "uniqueConstraints": {
             "_pgroll_new_poems_xata_id_key": {

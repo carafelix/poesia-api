@@ -173,3 +173,4 @@ _/*
 .wrangler
 .xatarc
 .xata/*
+drizzle.config.ts

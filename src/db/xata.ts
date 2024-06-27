@@ -72,10 +72,18 @@ const tables = [
       name: 'books',
       columns: [
          {
-            name: 'author_name',
-            type: 'text',
-            notNull: true,
+            name: 'author',
+            type: 'link',
+            link: { table: 'authors' },
+            notNull: false,
             unique: false,
+            defaultValue: null,
+         },
+         {
+            name: 'google_books_link',
+            type: 'text',
+            notNull: false,
+            unique: true,
             defaultValue: null,
          },
          {
@@ -126,15 +134,9 @@ const tables = [
       name: 'poems',
       columns: [
          {
-            name: 'book_id',
-            type: 'text',
-            notNull: false,
-            unique: false,
-            defaultValue: null,
-         },
-         {
-            name: 'book_title',
-            type: 'text',
+            name: 'book',
+            type: 'link',
+            link: { table: 'books' },
             notNull: false,
             unique: false,
             defaultValue: null,
@@ -145,6 +147,13 @@ const tables = [
             notNull: true,
             unique: false,
             defaultValue: 'false',
+         },
+         {
+            name: 'length',
+            type: 'int',
+            notNull: true,
+            unique: false,
+            defaultValue: null,
          },
          {
             name: 'no_sibilings',

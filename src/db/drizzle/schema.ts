@@ -1,13 +1,14 @@
 import {
    bigint,
    boolean,
+   foreignKey,
    integer,
    pgTable,
    text,
    timestamp,
    unique,
-   uniqueIndex,
 } from 'drizzle-orm/pg-core'
+import { sql } from 'drizzle-orm'
 
 export const authors = pgTable('authors', {
    // You can use { mode: "bigint" } if numbers are exceeding js number limitations
@@ -30,13 +31,8 @@ export const authors = pgTable('authors', {
    country: text('country').notNull(),
 }, (table) => {
    return {
-      _pgroll_new_authors_xata_id_key: uniqueIndex(
-         '_pgroll_new_authors_xata_id_key',
-      ).using('btree', table.xata_id),
-      name_unique: uniqueIndex('authors_name_unique').using(
-         'btree',
-         table.name,
-      ),
+      _pgroll_new_authors_xata_id_key: unique('_pgroll_new_authors_xata_id_key')
+         .on(table.xata_id),
       authors_name_unique: unique('authors_name_unique').on(table.name),
    }
 })
@@ -56,22 +52,25 @@ export const books = pgTable('books', {
    xata_id: text('xata_id').default(
       `('rec_'::text || (xata_private.xid())::text)`,
    ).notNull(),
-   author_name: text('author_name').notNull(),
    title: text('title').notNull(),
+   google_books_link: text('google_books_link'),
+   author: text('author').references(() => authors.xata_id, {
+      onDelete: 'set null',
+   }),
 }, (table) => {
    return {
-      _pgroll_new_books_xata_id_key: uniqueIndex(
-         '_pgroll_new_books_xata_id_key',
-      )
-         .using('btree', table.xata_id),
+      _pgroll_new_books_xata_id_key: unique('_pgroll_new_books_xata_id_key').on(
+         table.xata_id,
+      ),
+      books_GB_link_unique: unique('books_GB_link_unique').on(
+         table.google_books_link,
+      ),
    }
 })
 
 export const poems = pgTable('poems', {
    title: text('title'),
    text: text('text'),
-   book_title: text('book_title'),
-   book_id: text('book_id'),
    // You can use { mode: "bigint" } if numbers are exceeding js number limitations
    subindex: bigint('subindex', { mode: 'number' }),
    xata_id: text('xata_id').default(
@@ -87,11 +86,14 @@ export const poems = pgTable('poems', {
       mode: 'string',
    }).defaultNow().notNull(),
    canon: boolean('canon').default(false).notNull(),
+   no_sibilings: boolean('no_sibilings').default(false),
+   // You can use { mode: "bigint" } if numbers are exceeding js number limitations
+   length: bigint('length', { mode: 'number' }).notNull(),
+   book: text('book').references(() => books.xata_id, { onDelete: 'set null' }),
 }, (table) => {
    return {
-      _pgroll_new_poems_xata_id_key: uniqueIndex(
-         '_pgroll_new_poems_xata_id_key',
-      )
-         .using('btree', table.xata_id),
+      _pgroll_new_poems_xata_id_key: unique('_pgroll_new_poems_xata_id_key').on(
+         table.xata_id,
+      ),
    }
 })

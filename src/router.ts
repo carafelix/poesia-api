@@ -6,6 +6,7 @@ import {
    // PoemCreate,
    // PoemDelete,
    PoemFetch,
+   PoemRandom,
    PoemsList,
 } from './endpoints/poems/poem'
 import {
@@ -53,6 +54,7 @@ export function getRouter(env: Bindings) {
    openapi.put('/autores', AuthorCreate)
    // openapi.patch("/autores/:name", AuthorUpdate);
    openapi.get('/poema', PoemFetch) // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
+   openapi.get('/poemarandom', PoemRandom) // id > autor/libro/nombre > autor/nombre > libro/nombre > nombre. Siempre retorna una lista, de modo que si hay collision, siempre es result[0] o lo q se quiera hacer con ello
    // openapi.post("/poema", PoemCreate); // needs to check book, author, pre-exist etc
    // openapi.delete("/poema/:id", PoemDelete);
 
