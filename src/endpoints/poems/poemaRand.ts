@@ -3,7 +3,7 @@ import { XataClient } from '../../db/xata'
 import { PoemResponseSchema, PoemSchema } from '../../db/zodSchemas'
 import { drizzle } from 'drizzle-orm/xata-http'
 import { Bindings } from 'types'
-import { OpenAPIRoute } from 'chanfana'
+import { OpenAPIRoute, contentJson } from 'chanfana'
 import type { Context } from 'hono'
 import { z } from 'zod'
 import { lte, eq } from 'drizzle-orm'
@@ -22,7 +22,7 @@ export class PoemRandom extends OpenAPIRoute {
       responses: {
          '200': {
             description: 'Returns a Poem exact match or a list of fuzzy Poems',
-            schema: PoemResponseSchema
+            ...contentJson(PoemResponseSchema)
          },
       },
    }
