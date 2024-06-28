@@ -1,3 +1,5 @@
+import { Poem } from 'db/zodSchemas'
+
 export type Bindings = {
    POEMAS_DB: D1Database
    TOKENS_KV: KVNamespace

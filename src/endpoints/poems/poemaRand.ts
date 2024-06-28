@@ -1,12 +1,12 @@
-import * as schema from '../../db/drizzle/schema'
+import * as tables from '../../db/drizzle/schema'
 import { XataClient } from '../../db/xata'
-import { PoemSchema } from '../../db/zodSchemas'
+import { PoemResponseSchema, PoemSchema } from '../../db/zodSchemas'
 import { drizzle } from 'drizzle-orm/xata-http'
 import { Bindings } from 'types'
 import { OpenAPIRoute } from 'chanfana'
 import type { Context } from 'hono'
 import { z } from 'zod'
-import { sql } from 'drizzle-orm'
+import { lte, eq } from 'drizzle-orm'
 
 export class PoemRandom extends OpenAPIRoute {
    schema = {
@@ -22,9 +22,7 @@ export class PoemRandom extends OpenAPIRoute {
       responses: {
          '200': {
             description: 'Returns a Poem exact match or a list of fuzzy Poems',
-            schema: {
-               poem: PoemSchema,
-            },
+            schema: PoemResponseSchema
          },
       },
    }
@@ -41,21 +39,32 @@ export class PoemRandom extends OpenAPIRoute {
       })
 
       const db = drizzle(xata, {
-         schema,
+         schema: tables,
       })
 
       let { length } = data.query
-      length ??= 500
+      length ??= 3000
       try {
-         const result = await db.query.poems.findMany({
-            where(fields, { lte }) {
-               return lte(fields.length, length)
-            },
+         const poems = await db.select({
+            poemTitle: tables.poems.title,
+            poemSubindex: tables.poems.subindex,
+            poemText: tables.poems.text,
+            bookTitle: tables.books.title,
+            authorName: tables.authors.name
          })
-         if (!result) {
-            return new Response('No poem Found', { status: 404 })
+            .from(tables.poems)
+            .where(lte(tables.poems.length, length))
+            .leftJoin(tables.books, eq(tables.books.xata_id, tables.poems.book))
+            .leftJoin(tables.authors, eq(tables.authors.xata_id, tables.books.author))
+            .execute()
+
+         const poem = poems[Math.floor(Math.random() * poems.length)]
+
+         if (!poem) {
+            return new Response('No Poem correctly Found', { status: 404 })
          }
-         return result[Math.floor(Math.random() * result.length)]
+
+         return poem
       } catch (error) {
          console.log(error)
          return new Response(JSON.stringify(data), { status: error.status })
