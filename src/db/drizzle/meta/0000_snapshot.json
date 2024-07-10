@@ -1,293 +1,275 @@
 {
-   "id": "00000000-0000-0000-0000-000000000000",
-   "prevId": "",
-   "version": "7",
-   "dialect": "postgresql",
-   "tables": {
-      "public.authors": {
-         "name": "authors",
-         "schema": "",
-         "columns": {
-            "birth_year": {
-               "name": "birth_year",
-               "type": "bigint",
-               "primaryKey": false,
-               "notNull": false
+    "id": "00000000-0000-0000-0000-000000000000",
+    "prevId": "",
+    "version": "7",
+    "dialect": "postgresql",
+    "tables": {
+        "public.authors": {
+            "name": "authors",
+            "schema": "",
+            "columns": {
+                "birth_year": {
+                    "name": "birth_year",
+                    "type": "bigint",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "death_year": {
+                    "name": "death_year",
+                    "type": "bigint",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "xata_id": {
+                    "name": "xata_id",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "('rec_'::text || (xata_private.xid())::text)"
+                },
+                "xata_version": {
+                    "name": "xata_version",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 0
+                },
+                "xata_createdat": {
+                    "name": "xata_createdat",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "xata_updatedat": {
+                    "name": "xata_updatedat",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "country": {
+                    "name": "country",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                }
             },
-            "death_year": {
-               "name": "death_year",
-               "type": "bigint",
-               "primaryKey": false,
-               "notNull": false
-            },
-            "xata_id": {
-               "name": "xata_id",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "('rec_'::text || (xata_private.xid())::text)"
-            },
-            "xata_version": {
-               "name": "xata_version",
-               "type": "integer",
-               "primaryKey": false,
-               "notNull": true,
-               "default": 0
-            },
-            "xata_createdat": {
-               "name": "xata_createdat",
-               "type": "timestamp with time zone",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "now()"
-            },
-            "xata_updatedat": {
-               "name": "xata_updatedat",
-               "type": "timestamp with time zone",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "now()"
-            },
-            "name": {
-               "name": "name",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true
-            },
-            "country": {
-               "name": "country",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "_pgroll_new_authors_xata_id_key": {
+                    "columns": ["xata_id"],
+                    "nullsNotDistinct": false,
+                    "name": "_pgroll_new_authors_xata_id_key"
+                },
+                "authors_name_unique": {
+                    "columns": ["name"],
+                    "nullsNotDistinct": false,
+                    "name": "authors_name_unique"
+                }
             }
-         },
-         "indexes": {},
-         "foreignKeys": {},
-         "compositePrimaryKeys": {},
-         "uniqueConstraints": {
-            "_pgroll_new_authors_xata_id_key": {
-               "columns": [
-                  "xata_id"
-               ],
-               "nullsNotDistinct": false,
-               "name": "_pgroll_new_authors_xata_id_key"
+        },
+        "public.books": {
+            "name": "books",
+            "schema": "",
+            "columns": {
+                "publish_year": {
+                    "name": "publish_year",
+                    "type": "bigint",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "xata_version": {
+                    "name": "xata_version",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 0
+                },
+                "xata_createdat": {
+                    "name": "xata_createdat",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "xata_updatedat": {
+                    "name": "xata_updatedat",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "xata_id": {
+                    "name": "xata_id",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "('rec_'::text || (xata_private.xid())::text)"
+                },
+                "title": {
+                    "name": "title",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "author": {
+                    "name": "author",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'rec_cpkdr0jru25eev0v25k0'"
+                },
+                "GB_link": {
+                    "name": "GB_link",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                }
             },
-            "authors_name_unique": {
-               "columns": [
-                  "name"
-               ],
-               "nullsNotDistinct": false,
-               "name": "authors_name_unique"
+            "indexes": {},
+            "foreignKeys": {
+                "author_link": {
+                    "name": "author_link",
+                    "tableFrom": "books",
+                    "tableTo": "authors",
+                    "schemaTo": "public",
+                    "columnsFrom": ["author"],
+                    "columnsTo": ["xata_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "_pgroll_new_books_xata_id_key": {
+                    "columns": ["xata_id"],
+                    "nullsNotDistinct": false,
+                    "name": "_pgroll_new_books_xata_id_key"
+                },
+                "books_GB_link_unique": {
+                    "columns": ["GB_link"],
+                    "nullsNotDistinct": false,
+                    "name": "books_GB_link_unique"
+                }
             }
-         }
-      },
-      "public.books": {
-         "name": "books",
-         "schema": "",
-         "columns": {
-            "publish_year": {
-               "name": "publish_year",
-               "type": "bigint",
-               "primaryKey": false,
-               "notNull": false
+        },
+        "public.poems": {
+            "name": "poems",
+            "schema": "",
+            "columns": {
+                "title": {
+                    "name": "title",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "text": {
+                    "name": "text",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "subindex": {
+                    "name": "subindex",
+                    "type": "bigint",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "xata_id": {
+                    "name": "xata_id",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "('rec_'::text || (xata_private.xid())::text)"
+                },
+                "xata_version": {
+                    "name": "xata_version",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 0
+                },
+                "xata_createdat": {
+                    "name": "xata_createdat",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "xata_updatedat": {
+                    "name": "xata_updatedat",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "canon": {
+                    "name": "canon",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": false
+                },
+                "no_sibilings": {
+                    "name": "no_sibilings",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": false
+                },
+                "length": {
+                    "name": "length",
+                    "type": "bigint",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "book": {
+                    "name": "book",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                }
             },
-            "xata_version": {
-               "name": "xata_version",
-               "type": "integer",
-               "primaryKey": false,
-               "notNull": true,
-               "default": 0
+            "indexes": {},
+            "foreignKeys": {
+                "book_link": {
+                    "name": "book_link",
+                    "tableFrom": "poems",
+                    "tableTo": "books",
+                    "schemaTo": "public",
+                    "columnsFrom": ["book"],
+                    "columnsTo": ["xata_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "no action"
+                }
             },
-            "xata_createdat": {
-               "name": "xata_createdat",
-               "type": "timestamp with time zone",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "now()"
-            },
-            "xata_updatedat": {
-               "name": "xata_updatedat",
-               "type": "timestamp with time zone",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "now()"
-            },
-            "xata_id": {
-               "name": "xata_id",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "('rec_'::text || (xata_private.xid())::text)"
-            },
-            "title": {
-               "name": "title",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true
-            },
-            "author": {
-               "name": "author",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false,
-               "default": "'rec_cpkdr0jru25eev0v25k0'"
-            },
-            "GB_link": {
-               "name": "GB_link",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "_pgroll_new_poems_xata_id_key": {
+                    "columns": ["xata_id"],
+                    "nullsNotDistinct": false,
+                    "name": "_pgroll_new_poems_xata_id_key"
+                }
             }
-         },
-         "indexes": {},
-         "foreignKeys": {
-            "author_link": {
-               "name": "author_link",
-               "tableFrom": "books",
-               "tableTo": "authors",
-               "schemaTo": "public",
-               "columnsFrom": [
-                  "author"
-               ],
-               "columnsTo": [
-                  "xata_id"
-               ],
-               "onDelete": "set null",
-               "onUpdate": "no action"
-            }
-         },
-         "compositePrimaryKeys": {},
-         "uniqueConstraints": {
-            "_pgroll_new_books_xata_id_key": {
-               "columns": [
-                  "xata_id"
-               ],
-               "nullsNotDistinct": false,
-               "name": "_pgroll_new_books_xata_id_key"
-            },
-            "books_GB_link_unique": {
-               "columns": [
-                  "GB_link"
-               ],
-               "nullsNotDistinct": false,
-               "name": "books_GB_link_unique"
-            }
-         }
-      },
-      "public.poems": {
-         "name": "poems",
-         "schema": "",
-         "columns": {
-            "title": {
-               "name": "title",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false
-            },
-            "text": {
-               "name": "text",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false
-            },
-            "subindex": {
-               "name": "subindex",
-               "type": "bigint",
-               "primaryKey": false,
-               "notNull": false
-            },
-            "xata_id": {
-               "name": "xata_id",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "('rec_'::text || (xata_private.xid())::text)"
-            },
-            "xata_version": {
-               "name": "xata_version",
-               "type": "integer",
-               "primaryKey": false,
-               "notNull": true,
-               "default": 0
-            },
-            "xata_createdat": {
-               "name": "xata_createdat",
-               "type": "timestamp with time zone",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "now()"
-            },
-            "xata_updatedat": {
-               "name": "xata_updatedat",
-               "type": "timestamp with time zone",
-               "primaryKey": false,
-               "notNull": true,
-               "default": "now()"
-            },
-            "canon": {
-               "name": "canon",
-               "type": "boolean",
-               "primaryKey": false,
-               "notNull": true,
-               "default": false
-            },
-            "no_sibilings": {
-               "name": "no_sibilings",
-               "type": "boolean",
-               "primaryKey": false,
-               "notNull": false,
-               "default": false
-            },
-            "length": {
-               "name": "length",
-               "type": "bigint",
-               "primaryKey": false,
-               "notNull": true
-            },
-            "book": {
-               "name": "book",
-               "type": "text",
-               "primaryKey": false,
-               "notNull": false
-            }
-         },
-         "indexes": {},
-         "foreignKeys": {
-            "book_link": {
-               "name": "book_link",
-               "tableFrom": "poems",
-               "tableTo": "books",
-               "schemaTo": "public",
-               "columnsFrom": [
-                  "book"
-               ],
-               "columnsTo": [
-                  "xata_id"
-               ],
-               "onDelete": "set null",
-               "onUpdate": "no action"
-            }
-         },
-         "compositePrimaryKeys": {},
-         "uniqueConstraints": {
-            "_pgroll_new_poems_xata_id_key": {
-               "columns": [
-                  "xata_id"
-               ],
-               "nullsNotDistinct": false,
-               "name": "_pgroll_new_poems_xata_id_key"
-            }
-         }
-      }
-   },
-   "enums": {},
-   "schemas": {},
-   "_meta": {
-      "schemas": {},
-      "tables": {},
-      "columns": {}
-   },
-   "internal": {
-      "tables": {}
-   }
+        }
+    },
+    "enums": {},
+    "schemas": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "tables": {}
+    }
 }

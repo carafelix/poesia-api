@@ -19,7 +19,6 @@ export const createBookSchema = createInsertSchema(books)
 export const BookSchema = createSelectSchema(books)
 export type Book = z.TypeOf<typeof BookSchema>
 
-
 // Response Schemas
 
 export const PoemResponseSchema = z.object({
@@ -27,5 +26,5 @@ export const PoemResponseSchema = z.object({
     poemSubindex: z.number(),
     poemText: z.string(),
     bookTitle: z.string(),
-    authorName: z.string()
+    authorName: z.string(),
 })
