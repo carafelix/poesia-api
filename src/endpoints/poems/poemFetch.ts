@@ -19,7 +19,7 @@ export class PoemFetch extends OpenAPIRoute {
                     .min(1)
                     .optional()
                     .describe(
-                        "If a Poem is part of a set, it's index inside it",
+                        "If a Poem is part of a set, it's index inside it"
                     ),
             }),
         },
@@ -53,7 +53,13 @@ export class PoemFetch extends OpenAPIRoute {
         let { id, title, subindex } = data.query
         subindex ??= 1
         title ??= ''
+
+        if (id) {
+            title = ''
+            subindex = 0
+        }
         id ??= ''
+
         try {
             const result = await db.query.poems.findFirst({
                 orderBy: (poems) => poems.subindex,
@@ -62,16 +68,24 @@ export class PoemFetch extends OpenAPIRoute {
                         eq(poems.xata_id, id),
                         and(
                             eq(poems.title, title.toUpperCase()),
-                            eq(poems.subindex, subindex),
-                        ),
+                            eq(poems.subindex, subindex)
+                        )
                     ),
             })
             if (!result) {
-                return new Response('No poem Found', { status: 404 })
+                return {
+                    ok: false,
+                    status: 404,
+                    cause: 'No poem Found',
+                }
             }
             return result
         } catch (error) {
-            return new Response(JSON.stringify(data), { status: error.status })
+            return {
+                ok: false,
+                ...data,
+                error,
+            }
         }
     }
 }
